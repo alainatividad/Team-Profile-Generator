@@ -1,14 +1,14 @@
 const Manager = require("../lib/Manager");
 
-describe("Employee class", () => {
+describe("Manager class", () => {
   describe("Initialisation", () => {
-    it("should create an initialised object", () => {
+    it("should create an initialised object with role = Manager", () => {
       const manager = new Manager();
 
       expect(manager).toEqual({ role: "Manager" });
     });
 
-    it("should create an object with name, id, and email after calling the three get methods", () => {
+    it("should create an object with name, id, email, office number, and role after calling the four get methods", () => {
       const manager = new Manager();
       manager.getName("Alyssa Natividad");
       manager.getId(1);
