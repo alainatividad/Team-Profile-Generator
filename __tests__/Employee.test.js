@@ -1,67 +1,74 @@
 const Employee = require("../lib/Employee");
 
 describe("Employee class", () => {
-    describe("Initialisation", () => {
-        it("should create an object with a name, id, and email if given valid arguments", () => {
-            const employee = new Employee("Alyssa", 1, "alyssa@email.com");
+  describe("Initialisation", () => {
+    it("should create an initialised object", () => {
+      const employee = new Employee();
 
-            expect(employee.name).toEqual("Alyssa");
-            expect(employee.id).toEqual(1);
-            expect(employee.email).toEqual("alyssa.email.com");
-        });
+      expect(employee).toEqual({});
+    });
 
-        it("should throw an error if there are no arguments provided", () => {
-            const futureCmd = () => new Employee();
+    it("should create an object with name, id, and email after calling the three get methods", () => {
+      const employee = new Employee();
+      employee.getName("Alyssa Natividad");
+      employee.getId(1);
+      employee.getEmail("email@email.com");
 
-            expect(futureCmd).toThrow();
-        });
+      expect(employee).toEqual({
+        name: "Alyssa Natividad",
+        id: 1,
+        email: "email@email.com",
+      });
+    });
+  });
 
-        it("should throw an error if there are less than 3 arguments provided", () => {
-            const futureCmd = () => new Employee("Alyssa", 
-            "alyssa@email.com");
-            const err = new Error("Expected to have 3 parameters");
+  describe("getName", () => {
+    it("should return an error if name provided is not a string", () => {
+      const employee = new Employee();
+      const err = "Please enter a non-empty string";
 
-            expect(futureCmd).toThrowError(err);
-        });
+      expect(employee.getName("")).toEqual(err);
+    });
+  });
 
-        it("should throw an error if id provided is less than 1", () => {
-            const futureCmd = () => new Employee("Alyssa", 0,
-            "alyssa@email.com");
-            const err = new Error("Expected parameter 'id' to be a non-zero number");
+  describe("getId", () => {
+    it("should return an error if id provided is zero or is not a number", () => {
+      const employee = new Employee();
+      const err = "Please enter a non-zero number";
 
-            expect(futureCmd).toThrowError(err);
-        });
+      expect(employee.getId(0)).toEqual(err);
+      expect(employee.getId("0")).toEqual(err);
+    });
+  });
 
-        it("should throw an error if name provided is not a string", () => {
-            const futureCmd = () => new Employee(25, 1,
-            "alyssa@email.com");
-            const err = new Error("Expected parameter 'name' to be a non-empty string");
+  describe("getEmail", () => {
+    it("should return an error if email provided is not a string", () => {
+      const employee = new Employee();
+      const err = "Please enter a non-empty string.";
 
-            expect(futureCmd).toThrowError(err);
-        });
+      expect(employee.getEmail("")).toEqual(err);
+    });
 
-        it("should throw an error if id provided is not a number", () => {
-            const futureCmd = () => new Employee("Alyssa", "1",
-            "alyssa@email.com");
-            const err = new Error("Expected parameter 'id' to be a non-zero number");
+    it("should return an error if email doesn't have an '@'", () => {
+      const employee = new Employee();
+      const err = "Valid email should have '@'.";
 
-            expect(futureCmd).toThrowError(err);
-        });
+      expect(employee.getEmail("emailemail.com")).toEqual(err);
+    });
 
-        it("should throw an error if email provided doesn't have '@'", () => {
-            const futureCmd = () => new Employee("Alyssa", 0,
-            "alyssaemail.com");
-            const err = new Error("Expected parameter 'email' to have '@'");
+    it("should return an error if email doesn't end in '.com'", () => {
+      const employee = new Employee();
+      const err = "Valid email to end in '.com'.";
 
-            expect(futureCmd).toThrowError(err);
-        });
+      expect(employee.getEmail("email@email")).toEqual(err);
+    });
+  });
 
-        it("should throw an error if email provided doesn't end in '.com'", () => {
-            const futureCmd = () => new Employee("Alyssa", 0,
-            "alyssa@emailcom");
-            const err = new Error("Expected parameter 'email' to end in '.com'");
+  describe("getRole", () => {
+    it("should return 'Employee'", () => {
+      const employee = new Employee();
 
-            expect(futureCmd).toThrowError(err);
-        });
-    })
-})
+      expect(employee.getRole()).toEqual("Employee");
+    });
+  });
+});
