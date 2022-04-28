@@ -2,13 +2,13 @@ const Employee = require("../lib/Employee");
 
 describe("Employee class", () => {
   describe("Initialisation", () => {
-    it("should create an initialised object", () => {
+    it("should create an initialised object with role = Employee", () => {
       const employee = new Employee();
 
-      expect(employee).toEqual({});
+      expect(employee).toEqual({ role: "Employee" });
     });
 
-    it("should create an object with name, id, and email after calling the three get methods", () => {
+    it("should create an object with name, id, email, and role after calling the three get methods", () => {
       const employee = new Employee();
       employee.getName("Alyssa Natividad");
       employee.getId(1);
@@ -18,6 +18,7 @@ describe("Employee class", () => {
         name: "Alyssa Natividad",
         id: 1,
         email: "email@email.com",
+        role: "Employee",
       });
     });
   });
