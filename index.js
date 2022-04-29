@@ -1,6 +1,10 @@
+// include class definitions
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
+const questions = require("./lib/questions");
+// include modules for filesystem and inquirer
+const fs = require('fs');
 const inquirer = require("inquirer");
 
 // let's store the input objects into an array
@@ -10,52 +14,14 @@ function start() {
   // the program starts with asking for the manager's details
   inquirer
     .prompt([
-      {
-        type: "input",
-        name: "name",
-        message: "What's the name of the Team Manager?",
-        validate(input) {
-          if (!/[a-z ]/gi.test(input)) {
-            return "Please enter a non-empty string";
-          }
-          return true;
-        },
-      },
-      {
-        type: "input",
-        name: "empId",
-        message: "What's the employee ID of the Team Manager?",
-        validate(id) {
-          if (!/[1-9]/gi.test(id)) {
-            return "Please enter a non-zero number";
-          }
-          return true;
-        },
-      },
-      {
-        type: "input",
-        name: "email",
-        message: "What's the email of the Team Manager?",
-        validate(email) {
-          if (!/[a-z0-9.@]/gi.test(email)) {
-            return "Please enter a non-empty string.";
-          }
-          if (!email.includes("@")) {
-            return `Valid email should have '@'.`;
-          }
-          if (!email.endsWith(".com")) {
-            return `Valid email to end in '.com'.`;
-          }
-          return true;
-        },
-      },
+      ...questions,
       {
         type: "input",
         name: "officeNum",
         message: "What's the office number of the Team Manager?",
         validate(officeNumber) {
-          if (!/[0-9]/gi.test(officeNumber)) {
-            return "Please enter a valid office number (without spaces)";
+          if (!/^\d*$/gi.test(officeNumber)) {
+            return "Please enter a valid office number";
           }
           return true;
         },
@@ -71,7 +37,7 @@ function start() {
 
       // add it to the empty team array
       team.push(manager);
-      console.log(team);
+      console.log(JSON.stringify(team));
       // show prompt to add members or finish creating the team
       addMore();
     });
@@ -81,45 +47,7 @@ function getEngineer() {
   // if the user selects Engineer from the prompt, ask Engineer's details
   inquirer
     .prompt([
-      {
-        type: "input",
-        name: "name",
-        message: "What's the name of the Engineer?",
-        validate(input) {
-          if (!/[a-z ]/gi.test(input)) {
-            return "Please enter a non-empty string";
-          }
-          return true;
-        },
-      },
-      {
-        type: "input",
-        name: "empId",
-        message: "What's the employee ID of the Engineer?",
-        validate(id) {
-          if (!/[1-9]/gi.test(id)) {
-            return "Please enter a non-zero number";
-          }
-          return true;
-        },
-      },
-      {
-        type: "input",
-        name: "email",
-        message: "What's the email of the Engineer?",
-        validate(email) {
-          if (!/[a-z0-9.@]/gi.test(email)) {
-            return "Please enter a non-empty string.";
-          }
-          if (!email.includes("@")) {
-            return `Valid email should have '@'.`;
-          }
-          if (!email.endsWith(".com")) {
-            return `Valid email to end in '.com'.`;
-          }
-          return true;
-        },
-      },
+      ...questions,
       {
         type: "input",
         name: "github",
@@ -152,45 +80,7 @@ function getIntern() {
   // When Intern is selected on the addMore prompt, ask Intern details
   inquirer
     .prompt([
-      {
-        type: "input",
-        name: "name",
-        message: "What's the name of the Intern?",
-        validate(input) {
-          if (!/[a-z ]/gi.test(input)) {
-            return "Please enter a non-empty string";
-          }
-          return true;
-        },
-      },
-      {
-        type: "input",
-        name: "empId",
-        message: "What's the employee ID of the Intern?",
-        validate(id) {
-          if (!/[1-9]/gi.test(id)) {
-            return "Please enter a non-zero number";
-          }
-          return true;
-        },
-      },
-      {
-        type: "input",
-        name: "email",
-        message: "What's the email of the Intern?",
-        validate(email) {
-          if (!/[a-z0-9.@]/gi.test(email)) {
-            return "Please enter a non-empty string.";
-          }
-          if (!email.includes("@")) {
-            return `Valid email should have '@'.`;
-          }
-          if (!email.endsWith(".com")) {
-            return `Valid email to end in '.com'.`;
-          }
-          return true;
-        },
-      },
+      ...questions,
       {
         type: "input",
         name: "school",
@@ -247,6 +137,11 @@ function addMore() {
 }
 
 function quit() {
+  let teamHTML = '';
+  team.forEach(teamMember) {
+    teamHTML += generateHTML(teamMember);
+  }
+  
   process.exit(0);
 }
 
