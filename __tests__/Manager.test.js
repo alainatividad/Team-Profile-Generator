@@ -28,10 +28,11 @@ describe("Manager class", () => {
   describe("getNumber", () => {
     it("should return an error if number provided is not a number", () => {
       const manager = new Manager();
-      const err = "Please enter a valid office number (without spaces)";
+      const err = "Please enter a valid office number";
 
       expect(manager.getNumber("0abcd323")).toEqual(err);
       expect(manager.getNumber("ten")).toEqual(err);
+      expect(manager.getNumber("0-122232-8554")).toEqual(err);
     });
   });
 
