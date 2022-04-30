@@ -12,7 +12,7 @@ This program is ran using Node.js with modules Inquirer and Filesystem that hand
 
 The program is run in the command line, first running the test and then running the actual application where the user needs to add team member's details.
 
-https://user-images.githubusercontent.com/99376802/164706771-5741a3c2-ecdb-4e3b-b6c9-398f110240d5.mp4
+https://user-images.githubusercontent.com/99376802/166104551-bf78698f-d093-47ef-ada4-60f6cccf5eb1.mp4
 
 ### HTML sample file
 
